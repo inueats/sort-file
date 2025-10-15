@@ -20,7 +20,7 @@ import numpy as np
 #
 # 4. 結果の確認:
 #    - ファイルがタイムスタンプ順にソートされた後、全体の合計ファイルサイズを基に
-#      10個のフォルダに「合計サイズがほぼ均等になるように」分割・格納されます。
+#      11個のフォルダに「合計サイズがほぼ均等になるように」分割・格納されます。（ファイルサイズの端数で足りなくなるので10+1分割する）
 # ==================================================================================
 
 # --- 設定項目 ---
@@ -86,8 +86,8 @@ def sort_and_distribute_files_by_size():
     file_timestamps.sort(key=lambda x: x[0])
     sorted_files = [file_path for timestamp, file_path in file_timestamps]
     
-    if len(sorted_files) < 10:
-        print(f"エラー: ソート対象のファイルが{len(sorted_files)}個しかありません。10分割するには足りないため、処理を中断します。")
+    if len(sorted_files) < 11:
+        print(f"エラー: ソート対象のファイルが{len(sorted_files)}個しかありません。11分割するには足りないため、処理を中断します。")
         return
 
     # ============================================================================
@@ -98,12 +98,12 @@ def sort_and_distribute_files_by_size():
     total_size = sum(os.path.getsize(f) for f in sorted_files)
     
     # 2. 1グループあたりの目標サイズを計算
-    target_size_per_group = total_size / 10
+    target_size_per_group = total_size / 11
     
     print(f"\n合計ファイルサイズ: {total_size / (1024*1024):.2f} MB")
     print(f"1グループあたりの目標サイズ: {target_size_per_group / (1024*1024):.2f} MB")
 
-    # 3. ファイルを10個のグループに振り分ける
+    # 3. ファイルを11個のグループに振り分ける
     all_groups = []
     current_group = []
     current_group_size = 0
