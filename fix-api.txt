@@ -1,0 +1,8 @@
+dynamoDBボリューム削除
+ docker volume rm proj-gaio-car-ai_dynamodb_data
+
+APIイメージ再取得
+docker compose pull api
+
+API再起動
+docker compose up -d --no-deps --force-recreate api
